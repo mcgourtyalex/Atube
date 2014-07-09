@@ -22,7 +22,7 @@ function mediacore_test_content() {
             // Pull the mp4 links out
             $link = $item->getElementsByTagNameNS('*','content')->item(0)->getAttribute('url');
             $link = str_replace('?download=1', "", $link);
-            $link = 'http://atube'.$link;
+            $link = 'https://atube.autodesk.com'.$link;
             $links[$spot] = $link;
 
             // Pull the hrefs out
@@ -55,7 +55,7 @@ function mediacore_test_content() {
         
         echo '</table>';
 
-        echo '<a href="http://atube/media?show=latest"><h4>> More on Atube </h4></a>';
+        echo '<a href="https://atube.autodesk.com/media?show=latest"><h4>> More on Atube </h4></a>';
         
     } else {
         echo "Whoops! RSS unavailable.";
