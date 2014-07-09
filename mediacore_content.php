@@ -29,7 +29,7 @@ function mediacore_test_content() {
             $title = $item->getElementsByTagName('title')->item(0)->nodeValue;
             $titles[$spot] = $title;
 
-            // Pull the mp4 links out
+            // Pull the mp4 links out (namespace complication)
             $link = $item->getElementsByTagNameNS('*','content')->item(0)->getAttribute('url');
             $links[$spot] = linkify($link);
 
@@ -49,7 +49,7 @@ function mediacore_test_content() {
         echo '<tr>';
         for ($i = 0; $i < 4; $i++){
             echo '<td style="border: none; text-align: center;">';
-            embedify($links[$i]);
+            echo embedify($links[$i]);
             echo '</td>';
         }
         echo '</tr>';
@@ -78,12 +78,14 @@ function mediacore_test_content() {
 
 }
 
+// Returns formatted video embed
 function embedify($link) {
-    echo '<video style="width: 200px; height: 200px; border: 1px solid #BBBBBB;" width="200" height="200" frameborder="0" controls>
+    return '<video preload style="width: 200px; height: 200px; border: 1px solid #BBBBBB;" width="200" height="200" frameborder="0" controls>
     <source src="'.$link.'" type="video/mp4">
     </video> ';
 }
 
+// Returns formatted link
 function linkify($link) {
     $link = str_replace('?download=1', "", $link);
     return 'https://atube.autodesk.com'.$link;
