@@ -49,14 +49,14 @@ function mediacore_test_content() {
         echo '<tr>';
         for ($i = 0; $i < 4; $i++){
             echo '<td style="border: none; text-align: center;">';
-            echo embedify($links[$i]);
+            echo embedify($links[$i], $hrefs[$i]);
             echo '</td>';
         }
         echo '</tr>';
         // Title TR
         echo '<tr>';
         for ($i = 0; $i < 4; $i++){
-            echo '<td style="border: none; text-align: center;">';
+            echo '<td width="25%" style="border: none; text-align: center;">';
             // Link with href
             echo '<a href="'.$hrefs[$i].'">';
             // Echo title
@@ -73,22 +73,34 @@ function mediacore_test_content() {
         
     } else {
         // Echo if RSS can't be reached
-        echo "Whoops! RSS unavailable.";
+        echo '<a href="https://atube.autodesk.com/media?show=latest"><h4>> Latest ATube Videos </h4></a>';
     }
 
 }
 
 // Returns formatted video embed
-function embedify($link) {
-    return '<video preload style="width: 200px; height: 200px; border: 1px solid #BBBBBB;" width="200" height="200" frameborder="0" controls>
-    <source src="'.$link.'" type="video/mp4">
-    </video> ';
+function embedify($link, $href) {
+    if (strpos($link, '.mp4') !== FALSE) {
+        return '<video preload style="width: 200px; height: 200px; border: 1px solid #BBBBBB;" width="200" height="200" frameborder="0" controls>
+        <source src="'.$link.'" type="video/mp4">
+        <source src="'.$link.'" type="video/ogg">
+        </video>';
+    } elseif(strpos($link, '.swf') !== FALSE) {
+        return '<iframe src="'.$href.'/embed_player" style="width: 200px; height: 200px; border: 1px solid #BBBBBB;"></iframe>';
+    } else {
+        return 'Your browser does not support video';
+    }
 }
 
 // Returns formatted link
 function linkify($link) {
     $link = str_replace('?download=1', "", $link);
     return 'https://atube.autodesk.com'.$link;
+}
+
+function mp4ify($link) {
+    $link = str_replace('.swf', '.mp4', $link);
+    return $link;
 }
 
 
