@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: Mediacore Top Four
-Description: Embeds the top four videos from Atube
+Plugin Name: Atube Embed
+Description: Embeds the latest from Atube
 */
 
 define('MEDIA_PATH', plugin_dir_path( __FILE__ ) );
@@ -14,8 +14,8 @@ class wpb_widget extends WP_Widget {
     function __construct() {
         parent::__construct(
             'wpb_widget', 
-            __('Mediacore Top Four', 'mediacore_top_four'), 
-            array( 'description' => __( 'Embeds the top four videos from Atube', 'mediacore_top_four' ), ) 
+            __('Atube Embed', 'atube_embedder'), 
+            array( 'description' => __( 'Embeds the top four videos from Atube', 'atube_embedder' ), ) 
         );
         // embeds widget anywhere
         add_shortcode( 'atube_embed', 'mediacore_test_content' );

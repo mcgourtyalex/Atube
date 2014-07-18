@@ -4,7 +4,7 @@
 function mediacore_test_content($atts, $is_widg) {
 
     $atts = shortcode_atts( array(
-        'number' => '5',
+        'number' => '8',
     ), $atts );
 
     $number = $atts['number'];
