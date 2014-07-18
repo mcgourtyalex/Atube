@@ -17,8 +17,11 @@ class wpb_widget extends WP_Widget {
             __('Mediacore Top Four', 'mediacore_top_four'), 
             array( 'description' => __( 'Embeds the top four videos from Atube', 'mediacore_top_four' ), ) 
         );
+        // embeds widget anywhere
         add_shortcode( 'atube_embed', 'mediacore_test_content' );
+        // embeds single vid
         add_shortcode( 'atube_embed_single', 'mediacore_single_content' );
+        // embeds linked title
         add_shortcode( 'atube_embed_single_name', 'mediacore_single_content_name' );
     }
 

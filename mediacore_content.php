@@ -61,7 +61,7 @@ function mediacore_test_content($atts, $is_widg) {
         echo '<tr>';
         for ($i = 0; $i < $number; $i++){
             echo '<td style="border: none; text-align: center; padding: 0px; padding-right: 10px;">';
-            echo embedify($links[$i], $hrefs[$i], 200, 200);
+            echo embedify($hrefs[$i], 200, 200);
             echo '</td>';
         }
         echo '</tr>';
@@ -99,6 +99,7 @@ function mediacore_test_content($atts, $is_widg) {
     }
 }
 
+// Echoes a single video to the page
 function mediacore_single_content($atts) {
 
     $atts = shortcode_atts( array(
@@ -120,7 +121,8 @@ function mediacore_single_content($atts) {
             $items = $dom->getElementsByTagName('item');
             $item = $items->item($vid_num-1);
             $href = $item->getElementsByTagName('link')->item(0)->nodeValue;
-            echo embedify("", $href, $width, $height);
+            $link = $item->getElementsByTagNameNS('*','content')->item(0)->getAttribute('url');
+            echo embedify($href, $width, $height);
  
             $output_string = ob_get_contents();
             ob_end_clean();
@@ -129,6 +131,7 @@ function mediacore_single_content($atts) {
     }
 }
 
+// Echoes a linked title to the page
 function mediacore_single_content_name($atts) {
 
     $atts = shortcode_atts( array(
@@ -145,7 +148,10 @@ function mediacore_single_content_name($atts) {
             $items = $dom->getElementsByTagName('item');
             $item = $items->item($vid_num-1);
             $title = $item->getElementsByTagName('title')->item(0)->nodeValue;
+            $href = $item->getElementsByTagName('link')->item(0)->nodeValue;
+            echo '<a href="'.$href.'" class="atube_vid_link">';
             echo $title;
+            echo '</a>';
  
             $output_string = ob_get_contents();
             ob_end_clean();
@@ -155,21 +161,14 @@ function mediacore_single_content_name($atts) {
 }
 
 
+// ----------------- HELPER FUNCTIONS ------------------------
+
 // Returns formatted video embed
-function embedify($link, $href, $width, $height) {
-    /*if (strpos($link, '.mp4') !== FALSE) {
-        return '<video preload style="width: 200px; height: 200px; border: 1px solid #BBBBBB;" width="200" height="200" frameborder="0" controls>
-        <source src="'.$link.'" type="video/mp4">
-        <source src="'.$link.'" type="video/ogg">
-        </video>';
-    } elseif(strpos($link, '.swf') !== FALSE) {*/
+function embedify($href, $width, $height) {
         $str = '<iframe src="'.$href.'/embed_player" style="width: ';
         $str = $str.$width.'px; height:'; 
         $str = $str.$height.'px; border: 1px solid #BBBBBB;"></iframe>';
         return $str;
-    /*} else {
-        return 'Your browser does not support video';
-    }*/
 }
 
 // Returns formatted link
